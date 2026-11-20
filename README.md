@@ -1,13 +1,12 @@
 # Silo App Links
 
-Maintained by [ATTMonk](https://github.com/attmonk).
-
 Silo plugin that adds an Apps launcher for external services. Admins manage links in a custom admin panel. Users open links in a Silo-hosted fullscreen iframe shell or in a new tab.
 
 ## Storage
 
-Links are stored in `app-links.json` under `/var/lib/continuum/plugins/<plugin_id>/`,
-using the stable `plugin_id` declared in [manifest.json](manifest.json).
+Links are stored in JSON. By default the plugin writes:
+
+`/var/lib/continuum/plugins/<plugin_id>/app-links.json`
 
 Override with:
 

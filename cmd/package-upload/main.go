@@ -10,6 +10,7 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 type manifestFile struct {
@@ -54,7 +55,7 @@ func main() {
 	manifest.Checksum = checksum
 	manifest.SupportedPlatforms = []map[string]string{{"os": *goos, "arch": *goarch}}
 
-	outManifest := manifestPath(*binaryPath)
+	outManifest := strings.TrimSuffix(*binaryPath, filepath.Ext(*binaryPath)) + ".manifest.json"
 	encodedManifest, err := json.MarshalIndent(manifest, "", "  ")
 	if err != nil {
 		panic(err)
@@ -69,11 +70,6 @@ func main() {
 	if err := writeZip(zipPath, *binaryPath, outManifest); err != nil {
 		panic(err)
 	}
-}
-
-func manifestPath(binaryPath string) string {
-	// Binary names carry no extension; filepath.Ext would treat ".2-linux-amd64" as one.
-	return binaryPath + ".manifest.json"
 }
 
 func writeZip(zipPath, binaryPath, manifestPath string) error {
